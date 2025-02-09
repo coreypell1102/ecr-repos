@@ -12,7 +12,7 @@ app = cdk.App()
 
 #Define possible app environments
 app_env = {
-    "211125306454": {"ctx": "dev", "region": "us-east-1"},
+    "730335265357": {"ctx": "dev", "region": "us-east-1"},
     "123456789012": {"ctx": "prod", "region": "us-east-1"},
 }
 

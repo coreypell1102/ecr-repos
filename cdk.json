@@ -77,7 +77,7 @@
     "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": true,
     "dev": {
       "app_name": "ecr-repos",
-      "artifact_bucket": "cdk-hnb659fds-assets-211125306454-us-east-1",
+      "artifact_bucket": "cdk-hnb659fds-assets-730335265357-us-east-1",
       "github_token_secret": "github-infra-pipelines",
       "github_token_secret_key": "token",
       "infra_pipeline_repo": "coreypell1102/ecr-repos",
