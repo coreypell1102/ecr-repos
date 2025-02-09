@@ -1,28 +1,51 @@
 #!/usr/bin/env python3
-import os
-
 import aws_cdk as cdk
+import boto3
+from botocore.exceptions import NoCredentialsError
 
-from ecr_repos.ecr_repos_stack import EcrReposStack
+from infrastructure.pipeline import PipelineStack
+
+#from keycloak_infra.keycloak_infra_stack import KeycloakInfraStack
 
 
 app = cdk.App()
-EcrReposStack(app, "EcrReposStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+#Define possible app environments
+app_envs = {
+    "211125306454": {"ctx": "dev", "region": "us-east-1"},
+    "123456789012": {"ctx": "prod", "region": "us-east-1"},
+}
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+sts_client = boto3.Session().client('sts')
+account = None
 
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
+try:
+    account = sts_client.get_caller_identity().get("Account")
+except NoCredentialsError:
+    print("No AWS credentials found. Please configure your credentials.")
+except Exception as e:
+    print("An error occurred: ", e)
+    
+if not account:
+    print("Assuming this is being run locally and will use the dev account")
+    account = next(iter(app_envs)) # Use the first account in the list
 
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
+print(f"Using account: {account}")
+print(f"Using environment: {app_envs[account]}")
 
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+env = cdk.Environment(account=account, region=app_envs[account]["region"])
+
+ctx = app.node.try_get_context(app_envs[account]["ctx"])
+if ctx is None:
+    raise ValueError(f"Context {app_envs[account]['ctx']} not found in cdk.context.json")
+
+pipeline = PipelineStack(
+    app,
+    construct_id=f"{ctx['app_name']}-Pipeline",
+    ctx=ctx,
+    env=env,
+    stack_name=f"{ctx['app_name']}-Pipeline",
+    description=f"{ctx['app_name']} Infrastructure Pipeline",
+)
 
 app.synth()
