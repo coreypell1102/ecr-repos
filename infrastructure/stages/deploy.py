@@ -2,7 +2,7 @@ import aws_cdk as cdk
 
 from infrastructure.stacks.ecr_repos import EcrReposStack
 
-class DeployStage(cdk.stage):
+class DeployStage(cdk.Stage):
     def __init__(self, scope, id, ctx, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
