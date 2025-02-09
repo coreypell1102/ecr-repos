@@ -82,7 +82,7 @@
     "github_token_secret": "github-infra-pipelines",
     "github_token_secret_key": "token",
     "infa_pipeline_repo": "coreypell1102/ecr-repos",
-    "infa_pipeline_repo_branch": "master",
+    "infa_pipeline_repo_branch": "main",
     "repos": [
       {
         "name": "keycloak",
