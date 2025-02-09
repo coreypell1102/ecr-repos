@@ -74,20 +74,20 @@
     "@aws-cdk/core:cfnIncludeRejectComplexResourceUpdateCreatePolicyIntrinsics": true,
     "@aws-cdk/aws-lambda-nodejs:sdkV3ExcludeSmithyPackages": true,
     "@aws-cdk/aws-stepfunctions-tasks:fixRunEcsTaskPolicy": true,
-    "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": true
-  },
-  "dev": {
-    "app_name": "ecr-repos",
-    "artifact_bucket": "cdk-hnb659fds-assets-211125306454-us-east-1 ",
-    "github_token_secret": "github-infra-pipelines",
-    "github_token_secret_key": "token",
-    "infa_pipeline_repo": "coreypell1102/ecr-repos",
-    "infa_pipeline_repo_branch": "main",
-    "repos": [
-      {
-        "name": "keycloak",
-        "max_image_count": 10
-      }
-    ]
+    "@aws-cdk/aws-ec2:bastionHostUseAmazonLinux2023ByDefault": true,
+    "dev": {
+      "app_name": "ecr-repos",
+      "artifact_bucket": "cdk-hnb659fds-assets-211125306454-us-east-1",
+      "github_token_secret": "github-infra-pipelines",
+      "github_token_secret_key": "token",
+      "infra_pipeline_repo": "coreypell1102/ecr-repos",
+      "infra_pipeline_branch": "main",
+      "repos": [
+        {
+          "name": "keycloak",
+          "max_image_count": 10
+        }
+      ]
+    }
   }
 }
